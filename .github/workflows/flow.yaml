@@ -28,5 +28,11 @@ jobs:
       - name: Transform data
         run: python transform.py
 
-      - name: Load data
-        run: python load.py
+      - name: Load and visualize data
+        run: python visualize.py
+      
+      - name: Upload Visualization Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: visualizations
+          path: scatter_plot.png

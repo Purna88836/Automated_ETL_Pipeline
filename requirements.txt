@@ -2,3 +2,5 @@ pandas
 numpy
 sqlalchemy
 mysql-connector-python
+plotly
+kaleido
