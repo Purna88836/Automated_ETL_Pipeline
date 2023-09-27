@@ -1,5 +1,5 @@
 import pandas as pd
-import mysql.connector
+from sqlalchemy import create_engine
 
 # Replace with your database connection details
 db_config = {
@@ -9,11 +9,7 @@ db_config = {
     "database": "sql9649540",
 }
 
-# Establish a database connection
-connection = mysql.connector.connect(**db_config)
-
-# Create a cursor
-cursor = connection.cursor()
+engine = create_engine(f"mysql+mysqlconnector://{db_config['user']}:{db_config['password']}@{db_config['host']}/{db_config['database']}")
 
 # Load data from a CSV file into a MySQL table
 try:
@@ -24,7 +20,7 @@ try:
     target_table = 'product'
 
     # Insert the data into the MySQL table (replace 'if_exists' as needed)
-    df.to_sql(name=target_table, con=connection, if_exists='replace', index=False)
+    df.to_sql(name=target_table, con=engine, if_exists='replace', index=False)
 
     print("Data loaded into the MySQL database successfully.")
 
@@ -32,6 +28,4 @@ except Exception as e:
     print(f"Error: {str(e)}")
 
 finally:
-    # Close cursor and connection
-    cursor.close()
-    connection.close()
+    engine.dispose()
