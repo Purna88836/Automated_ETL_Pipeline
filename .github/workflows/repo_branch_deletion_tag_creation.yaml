@@ -33,7 +33,7 @@ jobs:
           curl -s -X POST \
             -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
-            -d "{\"ref\": \"refs/tags/release/stage-$(date +%d-%m-%Y)-branchmigration\", \"sha\": \"${COMMIT_SHA}\"}" \
+            -d "{\"ref\": \"refs/tags/release/qc-testing-$(date +%d-%m-%Y)-branchmigration\", \"sha\": \"${COMMIT_SHA}\"}" \
             "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs"
 
           curl -s -X DELETE \
