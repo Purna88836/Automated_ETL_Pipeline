@@ -26,17 +26,17 @@ jobs:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           COMMIT_SHA=$(curl -s \
-            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/commits/release/stage" | jq -r '.sha')
 
           curl -s -X POST \
-            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d "{\"ref\": \"refs/tags/release/stage-$(date +%d-%m-%Y)-branchmigration\", \"sha\": \"${COMMIT_SHA}\"}" \
             "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs"
 
           curl -s -X DELETE \
-            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs/heads/${{ github.event.inputs.branch-name }}"
