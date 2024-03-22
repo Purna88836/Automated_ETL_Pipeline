@@ -1,0 +1,46 @@
+name: Tag and Delete Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      git-username:
+        description: 'GitHub Username of the Target Repository Owner'
+        required: true
+      repo:
+        description: 'Target Repository Name'
+        required: true
+      branch-name:
+        description: 'Branch Name to Tag and Delete'
+        required: true
+      tag-name:
+        description: 'Tag Name'
+        required: true
+        default: 'backup-qa-$(date +%Y%m%d%H%M%S)'
+
+jobs:
+  tag-and-delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Tag in Another Repository
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          COMMIT_SHA=$(curl -s \
+            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/commits/${{ github.event.inputs.branch-name }}" | jq -r '.sha')
+
+          curl -s -X POST \
+            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "{\"ref\": \"refs/tags/${{ github.event.inputs.tag-name }}\", \"sha\": \"${COMMIT_SHA}\"}" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs"
+
+      - name: Delete the Branch in Another Repository
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -s -X DELETE \
+            -H "Authorization: token ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs/heads/${{ github.event.inputs.branch-name }}"
