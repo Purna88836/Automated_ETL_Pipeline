@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project, titled "End-to-End Data Integration and Visualization," demonstrates the creation of an ETL (Extract, Transform, Load) pipeline using GitHub Actions. The pipeline automatically triggers when a new `test.csv` file is added to the repository. It comprises three primary scripts: `extract.py`, `transform.py`, and `load.py`, responsible for data extraction, transformation, and loading into an external database. Additionally, it runs a `visualize.py` script to perform real-time data analysis and generate an interactive scatter plot..
+This project, titled "End-to-End Data Integration and Visualization," demonstrates the creation of an ETL (Extract, Transform, Load) pipeline using GitHub Actions. The pipeline automatically triggers when a new `test.csv` file is added to the repository. It comprises three primary scripts: `extract.py`, `transform.py`, and `load.py`, responsible for data extraction, transformation, and loading into an external database. Additionally, it runs a `visualize.py` script to perform real-time data analysis and generate an interactive scatter plot...
 
 ## Table of Contents
 
