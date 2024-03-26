@@ -1,4 +1,4 @@
-# End-to-End Data Integration and Visualization using Automated ETL Pipeline and Python.
+# End-to-End Data Integration and Visualization using python Automated ETL Pipeline and Python.
 
 ## Overview
 
