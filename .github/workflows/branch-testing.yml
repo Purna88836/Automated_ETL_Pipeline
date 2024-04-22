@@ -1,4 +1,4 @@
-name: Tag and Delete Branch
+name: Test branch
 
 on:
   workflow_dispatch:
