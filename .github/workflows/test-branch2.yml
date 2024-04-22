@@ -1,6 +1,9 @@
 name: Test branch 2
 
 on:
+  push:
+    branches:
+    - feature/testing2
   workflow_dispatch:
     inputs:
       git-username:
