@@ -1,0 +1,25 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - feature/testing2
+  workflow_dispatch:
+    inputs:
+      git-username:
+        description: 'GitHub Username of the Target Repository Owner'
+        required: true
+      repo:
+        description: 'Target Repository Name'
+        required: true
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Print inputs
+        run: |
+          echo "Username: ${{ github.event.inputs.git-username }}"
+          echo "Repository: ${{ github.event.inputs.repo }}"
