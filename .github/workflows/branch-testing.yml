@@ -1,9 +1,6 @@
 name: Test branch
 
 on:
-  push:
-    branches:
-    - branch-testing
   workflow_dispatch:
 
 jobs:
