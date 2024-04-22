@@ -1,0 +1,32 @@
+name: Test branch
+
+on:
+  workflow_dispatch:
+  inputs:
+      git-username:
+        description: 'GitHub Username of the Target Repository Owner'
+        required: true
+
+jobs:
+  tag-and-delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Tag in Another Repository
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          COMMIT_SHA=$(curl -s \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/commits/release/poorna" | jq -r '.sha')
+
+          curl -s -X POST \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "{\"ref\": \"refs/tags/release/poorna-$(date +%d-%m-%Y)-branchmigration\", \"sha\": \"${COMMIT_SHA}\"}" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs"
+
+          curl -s -X DELETE \
+            -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.event.inputs.git-username }}/${{ github.event.inputs.repo }}/git/refs/heads/${{ github.event.inputs.branch-name }}"
