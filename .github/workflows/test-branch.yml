@@ -2,10 +2,6 @@ name: Test branch
 
 on:
   workflow_dispatch:
-  inputs:
-      git-username:
-        description: 'GitHub Username of the Target Repository Owner'
-        required: true
 
 jobs:
   tag-and-delete:
