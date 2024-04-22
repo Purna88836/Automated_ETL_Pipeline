@@ -3,7 +3,7 @@ name: Example Workflow
 on:
   push:
     branches:
-      - feature/testing10
+      - feature/testing2
 
 jobs:
   example_job:
