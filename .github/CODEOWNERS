@@ -1,0 +1,9 @@
+# Define CODEOWNERS for different directories
+# Require reviews from specific teams or individuals
+
+# All files in the repo
+* @repo-admins
+
+# Specific service directories
+/sagemaker-pipeline/ @ml-team
+/ec2-instance/ @devops-team
