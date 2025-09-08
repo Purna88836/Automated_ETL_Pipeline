@@ -1,0 +1,10 @@
+# Define code ownership for different directories
+# Require reviews from owners for changes in these directories
+
+# Root directory
+* @team-lead
+
+# Specific service directories
+/services/data-preprocessing/ @data-team
+/services/model-training/ @ml-team
+/services/deployment/ @devops-team
